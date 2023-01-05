@@ -19,6 +19,7 @@ defmodule PhoenixAppWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/send_fortune_cookie", PageController, :send_fortune_cookie
   end
 
   # Other scopes may use custom stacks.
