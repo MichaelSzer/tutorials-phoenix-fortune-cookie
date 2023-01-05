@@ -6,6 +6,13 @@ defmodule PhoenixAppWeb.PageController do
   end
 
   def send_fortune_cookie(%Plug.Conn{params: %{"name" => name, "email" => email, "topic" => topic}} = conn, _params) do
-    render(conn, "send_fortune_cookie.html", name: name, email: email, topic: topic)
+
+    # Create Email
+    email = PhoenixApp.PrepareEmail.create_fortune_cookie(name, email)
+
+    # Send Email
+    PhoenixApp.Mailer.deliver(email)
+  
+    render(conn, "send_fortune_cookie.html", name: name, topic: topic)
   end
 end

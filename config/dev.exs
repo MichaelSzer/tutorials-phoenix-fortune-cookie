@@ -69,3 +69,15 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+
+# Set Swoosh Configuration
+config :swoosh, :api_client, Swoosh.ApiClient.Hackney
+
+# Get Gmail API Token
+gmail_api_access_token = System.fetch_env!("GMAIL_API_ACCESS_TOKEN")
+
+# Setup Email
+config :phoenix_app, PhoenixApp.Mailer,
+  adapter: Swoosh.Adapters.Gmail,
+  access_token: gmail_api_access_token
