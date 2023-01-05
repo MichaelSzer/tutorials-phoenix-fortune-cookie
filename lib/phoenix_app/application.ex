@@ -20,6 +20,11 @@ defmodule PhoenixApp.Application do
       # {PhoenixApp.Worker, arg}
     ]
 
+    # Attach Telemetry Handlers
+    :telemetry.attach_many("telemetry-email", [
+      [:swoosh, :deliver, :stop]
+    ], &PhoenixApp.Telemetry.Email.handler_event/4, nil)
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: PhoenixApp.Supervisor]
