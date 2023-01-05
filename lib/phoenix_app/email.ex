@@ -6,8 +6,6 @@ defmodule PhoenixApp.PrepareEmail do
     |> to({name, email})
     |> from({"Michael Szerman", "michaelszer@gmail.com"})
     |> subject("Fortune Cookie🥠")
-    |> render_body("fortune_cookie.html")
-    #|> render_body("fortune_cookie.html", %{fortune_cookie_prompt: fortune_cookie_prompt})
-    #<%= @fortune_cookie_prompt %>
+    |> render_body("fortune_cookie.html", fortune_cookie_prompt: fortune_cookie_prompt)
   end
 end
