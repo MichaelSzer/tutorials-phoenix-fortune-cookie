@@ -77,7 +77,15 @@ config :swoosh, :api_client, Swoosh.ApiClient.Hackney
 # Get Gmail API Token
 gmail_api_access_token = System.fetch_env!("GMAIL_API_ACCESS_TOKEN")
 
-# Setup Email
+# Configure Email
 config :phoenix_app, PhoenixApp.Mailer,
   adapter: Swoosh.Adapters.Gmail,
   access_token: gmail_api_access_token
+
+
+# Get OpenAI Tokens
+openai_api_key = System.fetch_env!("OPENAI_API_KEY")
+
+# Configure OpenAI
+config :openai, 
+  api_key: openai_api_key

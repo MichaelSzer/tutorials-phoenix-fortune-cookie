@@ -51,7 +51,8 @@ defmodule PhoenixApp.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:hackney, "~> 1.18.1"},
       {:mail, ">= 0.0.0"},
-      {:phoenix_swoosh, "~> 1.0"}
+      {:phoenix_swoosh, "~> 1.0"},
+      {:openai, "~> 0.2.3"}
     ]
   end
 
