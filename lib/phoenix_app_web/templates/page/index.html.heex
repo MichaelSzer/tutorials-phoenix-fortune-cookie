@@ -3,21 +3,21 @@
     <h2>Send a Fortune Cookie</h2>
     <form action="/send_fortune_cookie" method="get">
       <div>
-        <label for="name">Enter your name:</label>
-        <input type="text" name="name" id="name" required />
+        <label for="sender">From:</label>
+        <input type="text" name="sender" id="sender" required />
       </div>
       <div>
-        <label for="email">Enter your email:</label>
+        <label for="email">Recepient email:</label>
         <input type="text" name="email" id="email" required />
       </div>
       <div style="margin-bottom: 20px;">
         <label for="topic">Fortune cookie topic (you can change it to any topic):</label>
-        <input type="text" name="topic" id="topic" value="strength" required />
+        <input type="text" name="topic" id="topic" value="business & money" required />
         <div>
-          <button class="cookie-topic" type="button">love & life</button>
-          <button class="cookie-topic" type="button">business and money</button>
-          <button class="cookie-topic" type="button">health and wellbeing</button>
-          <button class="cookie-topic" type="button">something random</button>
+          <%= for topic <- @recommended_topics do %>
+            <button class="cookie-topic" type="button" onClick={"changeTopic('#{topic}')"}><%= topic %></button>
+          <% end %>
+          <button class="cookie-topic" type="button" onClick="changeTopic(randomTopic())">random</button>
         </div>
       </div>
       <div class="text-center">
@@ -28,15 +28,52 @@
     </form>
   </article>
 </section>
-<div style="width: 600px; height: 430px; background-image: url('https://i.postimg.cc/pr8Q3FTP/chinese-diploma-backgroud-ready.jpg'); background-size: cover; background-repeat: no-repeat;">
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-  <p style="position: relative; left: 45%; top: 20%; font-size: 64px;">
-    🥠
-  </p>
-  <p style="font-family: Permanent Marker;  width: 75%; position: relative; top: 15%; left: 12%;">
-    Your financial luck will take a turn for the better in the near future.
-  </p>
-</div>
-<p>
-  By <a href="https://twitter.com/MiguelSzerman" target="_blank">Miguel</a>
-</p>
+<!-- Fortune Cookie Preview -->
+<%= render PhoenixAppWeb.EmailView, "fortune_cookie.html", %{sender: "Pedrito", name: "Nico", fortune_cookie_prompt: "\"The magical spells of Harry Potter will turn your wildest dreams into a reality, and bring unexpected good fortune to your future.\""} %>
+
+<!-- JQuery to modify fortune cookie topic -->
+<script>
+function changeTopic(topic) {
+  while(topic === $('input#topic').val()){
+    topic = randomTopic();
+  }
+
+  $('input#topic').val(topic);
+}
+function randomTopic(){
+  const topics = ["mbappe & a turtle", "unicorns", "harry potter", "meme stocks", "croissant", "ice-cream", "aliens", "the art of war", "italians"]; // Quick fix bc I'm sleepy
+  return topics[Math.floor(Math.random() * topics.length)];
+}
+$(document).ready(function(){
+  $('input#topic').val(randomTopic());
+});
+</script>
+
+<!-- Form CSS -->
+<style>
+.cookie-topic {
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 32px;
+  background-color: #efe5fd;
+  color: #3a3a3a;
+  display: inline-flex;
+  align-items: center;
+  border-color: transparent;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+}
+
+.cookie-topic:hover {
+  
+  background-color: #2EE59D;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.text-center {
+  text-align: center;
+}
+</style>
